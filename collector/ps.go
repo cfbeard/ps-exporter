@@ -2,10 +2,10 @@ package collector
 
 import (
     "fmt"
-    "time"
 
     "github.com/cfbeard/ps-exporter/config"
     "github.com/cfbeard/ps-exporter/log"
+    "github.com/cfbeard/ps-exporter/util"
 
     "github.com/prometheus/client_golang/prometheus"
     "github.com/shirou/gopsutil/v3/process"
@@ -83,7 +83,7 @@ func (this *psCollector) collect(ch chan<- prometheus.Metric, process *process.P
     if err != nil {
         return
     }
-    startTimeUnixFmt := msToTime(startTime)
+    startTimeUnixFmt := util.MsToTime(startTime)
 
     labels := []string{username, processName, fmt.Sprintf("%d", process.Pid), fmt.Sprintf("%d", ppid), startTimeUnixFmt.String()}
 
@@ -110,8 +110,4 @@ func (this *psCollector) collect(ch chan<- prometheus.Metric, process *process.P
         cpuPercent,
         labels...
     )
-}
-
-func msToTime(ms int64) time.Time {
-    return time.Unix(0, ms * int64(time.Millisecond))
 }
