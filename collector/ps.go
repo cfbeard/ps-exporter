@@ -66,35 +66,35 @@ func (this *psCollector) describe(key string) *prometheus.Desc {
 func (this *psCollector) collect(ch chan<- prometheus.Metric, process *process.Process) {
     username, err := process.Username()
     if err != nil {
-        log.Log.Errorf("Failed to get username for process '%d': ", process.Pid)
+        return
     }
 
     processName, err := process.Name()
     if err != nil {
-        log.Log.Errorf("Failed to get name of process '%d': ", process.Pid)
+        return
     }
 
     ppid, err := process.Ppid()
     if err != nil {
-        log.Log.Errorf("Failed to get parent pid of process '%d': ", process.Pid)
+        return
     }
 
     startTime, err := process.CreateTime()
     if err != nil {
-        log.Log.Errorf("Failed to get start time of process '%d': ", process.Pid)
+        return
     }
     startTimeUnixFmt := msToTime(startTime)
 
-    labels := []string{username, processName, fmt.Sprintf("%d", ppid), startTimeUnixFmt.String()}
+    labels := []string{username, processName, fmt.Sprintf("%d", process.Pid), fmt.Sprintf("%d", ppid), startTimeUnixFmt.String()}
 
     memPercent, err := process.MemoryPercent()
     if err != nil {
-        log.Log.Errorf("Failed to get memory percentage of process '%d': ", process.Pid)
+        return
     }
 
     cpuPercent, err := process.CPUPercent()
     if err != nil {
-        log.Log.Errorf("Failed to get cpu percentage of process '%d': ", process.Pid)
+        return
     }
 
     ch <- prometheus.MustNewConstMetric(

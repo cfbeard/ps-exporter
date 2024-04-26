@@ -17,7 +17,7 @@ type logger struct {
     *stdlog.Logger
 }
 
-var Log = NewLoggerWrapper(stdlog.New(os.Stdout, "[ exporter ] ", 0))
+var Log = NewLoggerWrapper(stdlog.New(os.Stderr, "[ exporter ] ", 0))
 
 func NewLoggerWrapper(l *stdlog.Logger) Logger {
     return &logger{Logger: l}

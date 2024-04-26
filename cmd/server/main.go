@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
     err := config.ParseConfigArgs()
     if err != nil {
         log.Log.Fatalf("Failed to parse command-line args: %v", err)
@@ -20,6 +19,4 @@ func main() {
     if err != nil {
         log.Log.Fatalf("Failed to start server: %v", err)
     }
-
-    log.Log.Infof("Server starter on port: %d", config.WebPort.Get())
 }
