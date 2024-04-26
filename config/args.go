@@ -13,12 +13,12 @@ type configArgs struct {
 func ParseConfigArgs() error {
 	config := configArgs{}
 
-	flag.BoolVar(&config.process, "ps-exporter", PsExporter.Get(), PsExporter.Description)
+	flag.BoolVar(&config.process, "ps-exporter", PsCollector.Get(), PsCollector.Description)
 	flag.IntVar(&config.port, "port", WebPort.Get(), WebPort.Description)
 
 	flag.Parse()
 
-	PsExporter.Set(config.process)
+	PsCollector.Set(config.process)
 	WebPort.Set(config.port)
 
 	return nil
