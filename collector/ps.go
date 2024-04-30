@@ -58,6 +58,7 @@ func (this *psCollector) describe(key string) *prometheus.Desc {
 
         labels := []string{"user", "process_name", "pid", "ppid", "start_time"}
         descriptor = prometheus.NewDesc(name, help, labels, nil)
+        this.descriptors[key] = descriptor
     }
 
     return descriptor
