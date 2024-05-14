@@ -55,7 +55,7 @@ func (this *psCollector) describe(key string) *prometheus.Desc {
         case "cpu_percent":
             help = "Percent of cpu used by a process"
         }
-
+        
         labels := []string{"user", "process_name", "pid", "ppid", "start_time"}
         descriptor = prometheus.NewDesc(name, help, labels, nil)
         this.descriptors[key] = descriptor
